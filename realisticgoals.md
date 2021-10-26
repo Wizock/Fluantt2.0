@@ -1,0 +1,4 @@
+- [ ] make the form look really good
+     - [x] design the login form
+     - [ ] design the register form 
+     - [ ] design multi-platform css
