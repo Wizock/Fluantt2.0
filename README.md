@@ -1,4 +1,3 @@
-![Screenshot 2021-09-28 043645](https://user-images.githubusercontent.com/36351054/134966132-12a8d4dd-ab07-4a44-8a15-78a45afec507.png)
 
 # 🟨 What's Next __Python__:
   
