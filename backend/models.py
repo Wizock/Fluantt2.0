@@ -10,8 +10,8 @@ class _localuser(AnonymousUserMixin, UserMixin,db.Model):
     email    = db.Column(db.String(), nullable=False)
     username = db.Column(db.String(), nullable=False)
     password = db.Column(db.String(), nullable=False)
-    name     = db.Column(db.String(), nullable=False)
-    nickname = db.Column(db.String(), nullable=False)
+    firstname= db.Column(db.String(), nullable=False)
+    lastname = db.Column(db.String(), nullable=False)
 
     is_authenticated = False
     is_active = False
@@ -23,12 +23,12 @@ class _localuser(AnonymousUserMixin, UserMixin,db.Model):
     def is_authenticated(self):
         return self.authenticated
 
-    def __init__(self,email,username,password,name,nickname): 
+    def __init__(self,email,username,password,firstname,lastname,nickname): 
         self.email = email
         self.username = username
         self.password = generate_password_hash(password)
-        self.name = name
-        self.nickname = nickname
+        self.firstname = firstname
+        self.lastname = lastname
         
     def verify_password(self, pwd):
         return check_password_hash(self.password, pwd)

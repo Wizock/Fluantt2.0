@@ -2,3 +2,8 @@
      - [x] design the login form
      - [ ] design the register form 
      - [ ] design multi-platform css
+- [ ] login protocol
+     - [ ] create login api in flask
+     - [ ] ship login data to flask
+     - [ ] impliment login functionality
+     - [ ] send signals signifying  

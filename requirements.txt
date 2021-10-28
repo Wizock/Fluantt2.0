@@ -1,9 +1,15 @@
+click==8.0.3
+colorama==0.4.4
+Flask==2.0.2
+itsdangerous==2.0.1
+Jinja2==3.0.2
+MarkupSafe==2.0.1
+Werkzeug==2.0.2
 requests==2.21.0
 oauthlib==3.1.1
 pyOpenSSL==19.0.0
 Authlib==0.15.4
 gunicorn==20.1.0
-Flask==2.0.2
 Flask-Admin==1.5.8
 Flask-Analytics==0.6.0
 Flask-BabelEx==0.9.4

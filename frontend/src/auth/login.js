@@ -5,13 +5,13 @@ const axios = require("axios");
 
 // let postRequest = 
 
-function postTest(username, password){
+function postLogin(username, password){
 
     console.log(`you posted with ${username} ${password} `)
     return axios(
             {
             method:'POST',
-            'url': 'https://127.0.0.1:5000/posttest',
+            'url': 'https://127.0.0.1:5000/login',
             data: {
                 'username': username,
                 'password':password,
@@ -32,7 +32,7 @@ function LoginPage(props){
     const [password, setPassword] = useState(0);
     const handleSubmit = () => {
         console.log('you posted')
-        postTest(username, password)
+        postLogin(username, password)
         alert(`you posted with ${username} ${password} `)
     }
     return (
@@ -71,6 +71,7 @@ function LoginPage(props){
                                             setPassword(document.getElementById('password').value)}}>
                                     Submit
                                 </Button>
+                                <Card.Text> If You Dont Have An Account, <Card.Link href='/register'>Please Register</Card.Link></Card.Text>
                             </Form>
                         </Card.Text>
                     </Card.Body>
