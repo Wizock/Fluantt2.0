@@ -23,7 +23,7 @@ class _localuser(AnonymousUserMixin, UserMixin,db.Model):
     def is_authenticated(self):
         return self.authenticated
 
-    def __init__(self,email,username,password,firstname,lastname,nickname): 
+    def __init__(self,email,username,password,firstname,lastname): 
         self.email = email
         self.username = username
         self.password = generate_password_hash(password)

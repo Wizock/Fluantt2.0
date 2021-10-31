@@ -35,52 +35,65 @@ function RegisterPage(props){
     const [lastname, setLastname] = useState(0);
     const handleSubmit = () => {
         console.log('you posted')
-        postRegister(email,username, password,firstname,lastname)
+        alert(email.toString(),username.toString(), password.toString(),firstname.toString(),lastname.toString())
+        postRegister(email.toString(),username.toString(), password.toString(),firstname.toString(),lastname.toString())
     }
     return (
-        <div style={{background: '#2b42d4',paddingTop: '10vh',height: '100vh'}} className="Login">
-            <header className="Login-header">
-                <Card style={{width: '85vw',marginLeft: 'auto',marginRight: 'auto',}}>
-                    <Card.Body>
-                        <Card.Title style={{textAlign: 'center'}}>Register</Card.Title>
-                        <Card.Text>
-                            <Form onSubmit={handleSubmit} id='form'>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Email address</Form.Label>
-                                    <Form.Control id='email' type="text" placeholder="Enter email" />
-                                    <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicUsername">
-                                    <Form.Label>Username</Form.Label>
-                                    <Form.Control type="text" id='username' placeholder="username" />
-                                    <Form.Text className="text-muted">
-                                    This is the name other's will view your profile
-                                    </Form.Text>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" id='password' placeholder="Password" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label>First Name</Form.Label>
-                                    <Form.Control type="text" id='firstname' placeholder="First Name" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label>Last Name</Form.Label>
-                                    <Form.Control type="text" id='lastname' placeholder="Last Name" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                    <Form.Check type="checkbox" label="Remember Me" />
-                                </Form.Group>
-                                <Button variant="primary" type="submit" onClick={() => {setEmail(document.getElementById('email').value);setUsername(document.getElementById('username').value);setPassword(document.getElementById('password').value);setFirstname(document.getElementById('firstname').value);setLastname(document.getElementById('lastname').value);}}>
-                                    Submit
-                                </Button>
-                            </Form>
-                            <Card.Text> If You Have An Account, <Card.Link href='/login'>Please Login</Card.Link></Card.Text>
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </header>
+        <div>
+            <div style={{background: '#2b42d4',paddingTop: '10vh',height: '100vh'}} className="Login">
+                <header className="Login-header"></header>
+                    <Card style={{width: '85vw',marginLeft: 'auto',marginRight: 'auto',}}>
+                        <Card.Body>
+                            <Card.Title style={{textAlign: 'center'}}>Register</Card.Title>
+                            
+                                <Form onSubmit={handleSubmit} id='form'>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Control id='email' type="text" placeholder="Enter email" />
+                                        <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Username</Form.Label>
+                                        <Form.Control type="text" id='username' placeholder="username" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Password</Form.Label>
+                                        <Form.Control type="password" id='password' placeholder="Password" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>First Name</Form.Label>
+                                        <Form.Control type="text" id='firstname' placeholder="First Name" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Last Name</Form.Label>
+                                        <Form.Control type="text" id='lastname' placeholder="Last Name" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Check type="checkbox" label="Remember Me" />
+                                    </Form.Group>
+                                    <div style={{display: 'flex', justifyContent:'center', alignItems:'center',}}>
+                                        <Button style={{display: 'flex', justifyContent:'center', alignItems:'center',width:"50%"}} width = '45%' variant="primary" type="submit" onClick={
+                                            () => {
+                                                setEmail(document.getElementById('email').value);
+                                                setUsername(document.getElementById('username').value);
+                                                setPassword(document.getElementById('password').value);
+                                                setFirstname(document.getElementById('firstname').value);
+                                                setLastname(document.getElementById('lastname').value);
+                                                }
+                                            }>
+                                            Submit
+                                        </Button><br></br>
+                                    </div>
+                                        <h5 style={{display: 'flex', justifyContent:'center', alignItems:'center',}}> 
+                                            If You Have An Account, 
+                                            <a href='/login'>
+                                                Please Login
+                                            </a>
+                                        </h5>
+                                </Form>
+                        </Card.Body>
+                    </Card>
+            </div>
         </div>
     )
 }

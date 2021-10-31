@@ -21,28 +21,40 @@ def yourMethod():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-@auth.route('/register',methods=['POST'])
+@auth.route('/register',methods=['POST','GET'])
 def register():
-    email    =  request.json['email'] 
-    username =  request.json['username']
-    password =  request.json['password']
-    firstnam =  request.json['firstname']
-    lastname =  request.json['lastname']
+    if request.method=="POST":
+        email    =  request.json['email'] 
+        username =  request.json['username']
+        password =  request.json['password']
+        firstnam =  request.json['firstname']
+        lastname =  request.json['lastname']
 
-    userReg = _localuser(
-        email,
-        username,
-        password,
-        firstnam,
-        lastname,
-    )
-    db.session.add(userReg)
-    db.session.commit()
-    print('succesful register')
-    return True
+        print(email,
+            username,
+            password,
+            firstnam,
+            lastname,
+            )
+
+        userReg = _localuser(
+            email,
+            username,
+            password,
+            firstnam,
+            lastname,
+        )
+        db.session.add(userReg)
+        db.session.commit()
+        print('succesful register')
+        return {"post ":"yes"}
+    if request.method=="GET":
+        return "this is the register route from the auth api <br><br><br> this is the address https://127.0.0.1:5000/register"
+        
 
 @auth.route('/login', methods=['POST'])
 def postTest():
+    print('hello world')
     username = request.json['username']
     password = request.json['password']
     print(f'username:{username} password:{password}')

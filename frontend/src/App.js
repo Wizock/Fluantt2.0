@@ -22,8 +22,10 @@ function Homepage (){
                     </Route>
                 </Switch>
             </Router>
-            <h2><a href='/login'>login</a></h2>
-            <h2><a href='/register'>register</a></h2>
+            <h2>
+            <a href='/login'>login</a>
+            <a href='/register'>register</a>
+            </h2>
         </div>
     )
 }
@@ -32,8 +34,6 @@ function App() {
     return (
     <div className="App">
         <Homepage />
-        
-        
     </div>
     );
 }

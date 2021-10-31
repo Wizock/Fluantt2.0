@@ -36,47 +36,64 @@ function LoginPage(props){
         alert(`you posted with ${username} ${password} `)
     }
     return (
-        <div style={{
-            background: '#2b42d4',
-            paddingTop: '10vh',
-            height: '100vh'}} className="Login">
+        <div>
+            <div style={{
+                background: '#2b42d4',
+                paddingTop: '10vh',
+                height: '100vh'}} >
+                <div>
+                    <div>
+                    <header className="Login-header"></header>
+                    </div>
+                    <Card style={{
+                        width: '85vw',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                    }}>
+                        <Card.Body>
+                            <Card.Title style={{textAlign: 'center'}}>
+                                Login
+                            </Card.Title>
+                            <div>
+                                <div>
+                                    <Form onSubmit={handleSubmit} id='form'>
+                                        <div>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Email address</Form.Label>
+                                                <Form.Control id='username' type="text" placeholder="Enter email" />
+                                                <Form.Text className="text-muted">
+                                                We'll never share your email with anyone else.
+                                                </Form.Text>
+                                            </Form.Group>
 
-            <header className="Login-header">
-                <Card style={{
-                    width: '85vw',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                }}>
-                    <Card.Body>
-                        <Card.Title style={{textAlign: 'center'}}>Login</Card.Title>
-                        <Card.Text>
-                            <Form onSubmit={handleSubmit} id='form'>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Email address</Form.Label>
-                                    <Form.Control id='username' type="text" placeholder="Enter email" />
-                                    <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                    </Form.Text>
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" id='password' placeholder="Password" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                    <Form.Check type="checkbox" label="Check me out" />
-                                </Form.Group>
-                                <Button variant="primary" type="submit" onClick={() => {
-                                            setUsername(document.getElementById('username').value);
-                                            setPassword(document.getElementById('password').value)}}>
-                                    Submit
-                                </Button>
-                                <Card.Text> If You Dont Have An Account, <Card.Link href='/register'>Please Register</Card.Link></Card.Text>
-                            </Form>
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </header>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Password</Form.Label>
+                                                <Form.Control type="password" id='password' placeholder="Password" />
+                                            </Form.Group>
+                                            <Form.Group className="mb-3">
+                                                <Form.Check type="checkbox" label="Check me out" />
+                                            </Form.Group>
+                                            <Button variant="primary" type="submit" onClick={() => {
+                                                        setUsername(document.getElementById('username').value);
+                                                        setPassword(document.getElementById('password').value)}}>
+                                                Submit
+                                            </Button>
+                                            <h3> 
+                                                If You Dont Have An Account,
+                                                <div>
+                                                    <a href='/register'>
+                                                        Please Register
+                                                    </a>
+                                                </div>
+                                            </h3>
+                                        </div>
+                                    </Form>
+                                </div>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </div>
+            </div>
         </div>
     )
 }
