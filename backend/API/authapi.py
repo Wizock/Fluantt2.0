@@ -1,4 +1,5 @@
 import json, os, requests
+import flask
 from flask.helpers import url_for
 from werkzeug.security import check_password_hash
 from flask import Blueprint, render_template, request, session, jsonify
@@ -8,7 +9,7 @@ from authlib.integrations.requests_client import OAuth2Session
 from flask_session import Session
 
 auth = Blueprint('authentication', __name__)
-from backend.__init__ import db
+from backend.__init__ import db, guard
 from backend.models import _localuser
 
 @login_required
@@ -30,20 +31,9 @@ def register():
         firstnam =  request.json['firstname']
         lastname =  request.json['lastname']
 
-        print(email,
-            username,
-            password,
-            firstnam,
-            lastname,
-            )
+        print(email,username,password,firstnam,lastname,)
 
-        userReg = _localuser(
-            email,
-            username,
-            password,
-            firstnam,
-            lastname,
-        )
+        userReg = _localuser(email,username,password,firstnam,lastname,)
         db.session.add(userReg)
         db.session.commit()
         print('succesful register')
@@ -53,12 +43,18 @@ def register():
         
 
 @auth.route('/login', methods=['POST'])
-def postTest():
-    print('hello world')
-    username = request.json['username']
-    password = request.json['password']
-    print(f'username:{username} password:{password}')
-    data = jsonify(request.json)
-    data.headers.add('Access-Control-Allow-Origin', '*')
-    return f"<h1>{request.get_json()}</h1>"
+def login_route():
+    if request.method == "POST":
+        req = flask.request.get_json(force=True)
+        username = req.get('username', None)
+        password = req.get('password', None)
+        user = guard.authenticate(username, password)
+        ret = {'access_token': guard.encode_jwt_token(user)}
+        return ret, 200
+    if request.method== 'GET':
+        return '<h1 style="align:center;">this is the login page</h1>'
 
+
+'''
+curl https://localhost:5000/login -X POST -d '{"username":"Yasoob","password":"strongpassword"}'
+'''

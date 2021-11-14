@@ -33,6 +33,18 @@ class _localuser(AnonymousUserMixin, UserMixin,db.Model):
     def verify_password(self, pwd):
         return check_password_hash(self.password, pwd)
 
+    @classmethod
+    def lookup(cls, username):
+        return cls.query.filter_by(username=username).one_or_none()
+    @classmethod
+    def identify(cls, id):
+        return cls.query.get(id)
+    @property
+    def identity(self):
+        return self.id
+    def is_valid(self):
+        return self.is_active
+
 
 class _googleAuthUser(UserMixin, db.Model):
     __tablename__ = '_googleAuthUser'
