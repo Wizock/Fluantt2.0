@@ -7,6 +7,7 @@ from flask_cors import CORS
 import flask_cors
 from flask import Flask
 import flask_praetorian
+from datetime import timedelta
 
 def create_app():
     appvar = Flask(__name__)
