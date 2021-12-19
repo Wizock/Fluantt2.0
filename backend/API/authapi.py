@@ -32,28 +32,59 @@ google = oauth.register(
     }
 )
 
+@auth.route('/register',methods=['POST','OPTIONS','GET'])
+@cross_origin()
+def register():
+    if request.method=="POST":
+        email    =  request.json['email'] 
+        username =  request.json['username']
+        password =  request.json['password']
+        firstname =  request.json['firstname']
+        lastname =  request.json['lastname']
+        data = jsonify(request.json)
+        data.headers.add('Access-Control-Allow-Origin', '*')
+        userReg = _localuser(email,username,password,firstname,lastname,)
+        db.session.add(userReg)
+        db.session.commit()
+        data = jsonify(request.json)
+        data.headers.add('Access-Control-Allow-Origin', '*')
+        print('succesful register')
+        return redirect('localhost:3000/login')
+    if request.method=="GET":
+        return "this is the register route from the auth api <br><br><br> this is the address https://127.0.0.1:5000/register"
 
-# @auth.route('/token', methods=['POST'])
-# def create_token():
-#     email = request.json.get("email", None)
-#     password = request.json.get("password", None)
-#     if email != "test" or password != "test":
-#         return jsonify({'msg':'Bad username or password'}), 401
-#     access_token = create_access_token(identity=email)
-#     return jsonify(access_token=access_token)
 
 @auth.route('/token', methods=['POST','OPTIONS','GET'])
 @cross_origin()
 def login_route():
     if request.method == 'POST':
+        print('first part')
         username = request.json['username']
         password = request.json['password']
-        print(f'username:{username} password:{password}')
         data = jsonify(request.json)
         data.headers.add('Access-Control-Allow-Origin', '*')
-        if username != 'test' or password != 'test':
+        print('second part')
+        currentUser = _localuser.query.filter_by(username=username).first()
+        print(currentUser.verify_password(password))
+        print('third')
+        if currentUser and currentUser.verify_password(password):
+            print('first if')
+            currentUser.is_active = True
+            login_user(currentUser)
+            print('last')
+            access_token = create_access_token(identity=username)
+            return jsonify({"access_token":access_token})
+        else:
             return jsonify({"msg":"bad username or password"}), 401
-        access_token = create_access_token(identity=username)
-        return jsonify({"access_token":access_token})
     if request.method == "GET":
         return "You didnt post"
+
+@login_required
+@auth.route('/login_test')
+def index():
+    return f"{current_user.id}{current_user.email}{current_user.username}{current_user.password}{current_user.firstname}{current_user.lastname}"
+
+@auth.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/googlelogout')

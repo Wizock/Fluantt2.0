@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 const axios = require("axios");
 
-function postRegister(email,username, password,firstname,lastname){
 
+function postRegister(email,username, password,firstname,lastname){
+    
     console.log(`you posted with ${username} ${password} `)
     return axios(
             {
             method:'POST',
-            'url': 'https://127.0.0.1:5000/register',
-            data: {
+            'url': 'http://127.0.0.1:5000/register',
+            data: JSON.stringify({
                 'email':email,
                 'username': username,
                 'password':password,
                 'firstname':firstname,
                 'lastname':lastname,
-            },
+            }),
             mode: 'cors',
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'same-origin',
@@ -33,10 +35,12 @@ function RegisterPage(props){
     const [password, setPassword] = useState(0);
     const [firstname, setFirstname] = useState(0);
     const [lastname, setLastname] = useState(0);
+    const history = useHistory();
     const handleSubmit = () => {
         console.log('you posted')
         alert(email.toString(),username.toString(), password.toString(),firstname.toString(),lastname.toString())
         postRegister(email.toString(),username.toString(), password.toString(),firstname.toString(),lastname.toString())
+        history.push('/login')
     }
     return (
         <div>
@@ -49,24 +53,24 @@ function RegisterPage(props){
                                 <Form onSubmit={handleSubmit} id='form'>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Email address</Form.Label>
-                                        <Form.Control id='email' type="text" placeholder="Enter email" />
+                                        <Form.Control id='email' name='email' type="text" placeholder="Enter email" />
                                         <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Username</Form.Label>
-                                        <Form.Control type="text" id='username' placeholder="username" />
+                                        <Form.Control type="text" id='username' name='username' placeholder="username" />
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control type="password" id='password' placeholder="Password" />
+                                        <Form.Control type="password" id='password' name='password' placeholder="Password" />
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Label>First Name</Form.Label>
-                                        <Form.Control type="text" id='firstname' placeholder="First Name" />
+                                        <Form.Control type="text" id='firstname' name='firstname' placeholder="First Name" />
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Last Name</Form.Label>
-                                        <Form.Control type="text" id='lastname' placeholder="Last Name" />
+                                        <Form.Control type="text" id='lastname' name='lastname' placeholder="Last Name" />
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Check type="checkbox" label="Remember Me" />
