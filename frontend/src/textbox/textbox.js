@@ -1,21 +1,32 @@
-import {React, useEffect} from 'react';
+import {React, useState} from 'react';
 
-export default class ReactHooksEventListenerDemo {
-    constructor(){
-        super(this)
-    }
-     state = {
-        x:0,
-        y:0
+let bufferCounter = 0
+let bufferArray = []
+
+function TextBox_route(){
+    const [displayData, SetdisplayData] = useState(0);
+    const [counter, setCounter] = useState(0);
+    const createTextBox=(e) => {
+        bufferCounter += 1
+        bufferArray.push(<textarea key={counter.toString()} id={counter} style={{"position": "absolute","left":`${e.screenX}px`, "top":`${e.screenY}px`}}></textarea>)
+        bufferArray.map(data => <div>{data}</div>)
+        console.log(bufferArray)
+        SetdisplayData(bufferArray)
+        setCounter(bufferCounter)
+        console.log(bufferCounter)
+        console.log(displayData)
     }
     
-    componentDidMount() {
-        window.addEventListener('mouseMove', this.mouseMove);
-    }
-    componentWillUnmount() {
-        window.removeEventListener('mouseMove', this.mouseMove);
-    }
-    mouseMoveEvent = (e) => {
-        console.log(e)
-    }
+    return(
+        <div style={{"height":"100vh","width":"100vw"}} onClick = {
+            e => {createTextBox(e)}}>
+        hello
+        <div>
+            {displayData}
+        </div>
+        </div>
+    )
 }
+
+
+export default TextBox_route
