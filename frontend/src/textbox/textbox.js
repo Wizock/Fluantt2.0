@@ -8,7 +8,11 @@ function TextBox_route(){
     const [counter, setCounter] = useState(0);
     const createTextBox=(e) => {
         bufferCounter += 1
-        bufferArray.push(<textarea key={counter.toString()} id={counter} style={{"position": "absolute","left":`${e.screenX}px`, "top":`${e.screenY}px`}}></textarea>)
+        let x = e.screenX;
+        let y = e.screenY - 70;
+
+        console.log(`x: ${e.screenX}, y: ${e.screenY}`)
+        bufferArray.push(<textarea key={counter.toString()} id={counter} style={{"position": "absolute","left":`${x}px`, "top":`${y}px`}}></textarea>)
         bufferArray.map(data => <div>{data}</div>)
         console.log(bufferArray)
         SetdisplayData(bufferArray)
@@ -20,10 +24,10 @@ function TextBox_route(){
     return(
         <div style={{"height":"100vh","width":"100vw"}} onClick = {
             e => {createTextBox(e)}}>
-        hello
-        <div>
-            {displayData}
-        </div>
+
+            <div>
+                {displayData}
+            </div>
         </div>
     )
 }
