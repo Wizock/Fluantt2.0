@@ -1,21 +1,45 @@
-import {React, useEffect} from 'react';
+import {React, useState} from 'react';
+import { useDrag } from 'react-dnd'
 
-export default class ReactHooksEventListenerDemo {
-    constructor(){
-        super(this)
-    }
-     state = {
-        x:0,
-        y:0
-    }
+let bufferCounter = 0
+let bufferArray = []
+let changex = 0
+let changey = 0
+
+function TextBox_route({ isDragging, text }){
     
-    componentDidMount() {
-        window.addEventListener('mouseMove', this.mouseMove);
+    const [displayData, SetdisplayData] = useState(0);
+    const [counter    , setCounter    ] = useState(0);
+    const [xdiff      , setxdiff      ] = useState(0);
+    const [ydiff      , setydiff      ] = useState(0);
+
+    const createTextBox=(e) => {
+        bufferCounter += 1
+        let x = e.screenX;
+        let y = e.screenY - 70;
+
+        bufferArray.push(<textarea 
+            onDragStart={
+                e=>{
+                    
+                }
+            } 
+            onDragEnd={
+                e=>{
+                    
+                }
+            } key={counter.toString()} id={counter} style={{"position": "absolute","left":`${x}px`, "top":`${y}px`}}></textarea>)
+        bufferArray.map(data => <div>{data}</div>)
+        SetdisplayData(bufferArray)
+        setCounter(bufferCounter)
     }
-    componentWillUnmount() {
-        window.removeEventListener('mouseMove', this.mouseMove);
-    }
-    mouseMoveEvent = (e) => {
-        console.log(e)
-    }
+    return(
+        <div style={{"height":"100vh","width":"100vw"}} onDoubleClick = {e => {createTextBox(e)}}>
+            <div>
+                {displayData}
+            </div>
+        </div>
+    )
 }
+
+export default TextBox_route
