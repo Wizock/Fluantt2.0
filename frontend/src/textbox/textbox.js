@@ -1,5 +1,6 @@
 import {React, useState} from 'react';
-import { useDrag } from 'react-dnd'
+import { useDoubleTap } from 'use-double-tap';
+
 
 let bufferCounter = 0
 let bufferArray = []
@@ -33,8 +34,13 @@ function TextBox_route({ isDragging, text }){
         SetdisplayData(bufferArray)
         setCounter(bufferCounter)
     }
+    const bind = useDoubleTap((event) => {
+        console.log(event.screenX)
+        console.log(event.screenY)
+        createTextBox(event)
+    });      
     return(
-        <div style={{"height":"100vh","width":"100vw"}} onDoubleClick = {e => {createTextBox(e)}}>
+        <div {...bind} style={{"height":"100vh","width":"100vw"}} onDoubleClick = {e => {createTextBox(e)}}>
             <div>
                 {displayData}
             </div>
