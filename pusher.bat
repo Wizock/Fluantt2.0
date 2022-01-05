@@ -1,3 +1,3 @@
 git add -A
-git commit -m "last commit"
+git commit -m "styling"
 git push origin styling internal-functionality

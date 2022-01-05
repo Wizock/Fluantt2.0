@@ -1,1 +1,1 @@
-ernal-functionality
+internal-functionality
