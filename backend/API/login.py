@@ -5,7 +5,7 @@ import os, json, sys
 
 login_manager = LoginManager(app)
 
-login_manager.login_view = "authentication.login"
+login_manager.login_view = "authentication.login_route"
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -1,2 +1,0 @@
-- add a on drag and modifiy its x and y values. 
-- 

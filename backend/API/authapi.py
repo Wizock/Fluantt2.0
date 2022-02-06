@@ -17,21 +17,25 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
-google = oauth.register(
-    name = 'google',
-    client_id = "1051638467361-9u2jc677sacg293dg1hso07bnkt0eagt.apps.googleusercontent.com",
-    client_secret = "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",
-    access_token_url = "https://accounts.google.com/o/oauth2/token",
-    access_token_params = None,
-    authorize_url = 'https://accounts.google.com/o/oauth2/auth',
-    authorize_params = None,
-    api_base_url = 'https://www.googleapis.com/oauth2/v1/',
-    userinfo_endpoint = 'https://openidconnect.googleapis.com/v1/userinfo',
-    client_kwargs={
-        'scope': 'openid email profile'
-    }
-)
+# google = oauth.register(
+#     name = 'google',
+#     client_id = "1051638467361-9u2jc677sacg293dg1hso07bnkt0eagt.apps.googleusercontent.com",
+#     client_secret = "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",
+#     access_token_url = "https://accounts.google.com/o/oauth2/token",
+#     access_token_params = None,
+#     authorize_url = 'https://accounts.google.com/o/oauth2/auth',
+#     authorize_params = None,
+#     api_base_url = 'https://www.googleapis.com/oauth2/v1/',
+#     userinfo_endpoint = 'https://openidconnect.googleapis.com/v1/userinfo',
+#     client_kwargs={
+#         'scope': 'openid email profile'
+#     }
+# )
 
+@auth.before_request
+def make_session_permanent():
+    session.permanent = True
+    
 @auth.route('/register',methods=['POST','OPTIONS','GET'])
 @cross_origin()
 def register():
@@ -39,11 +43,9 @@ def register():
         email    =  request.json['email'] 
         username =  request.json['username']
         password =  request.json['password']
-        firstname =  request.json['firstname']
-        lastname =  request.json['lastname']
         data = jsonify(request.json)
         data.headers.add('Access-Control-Allow-Origin', '*')
-        userReg = _localuser(email,username,password,firstname,lastname,)
+        userReg = _localuser(email,username,password)
         db.session.add(userReg)
         db.session.commit()
         data = jsonify(request.json)
@@ -58,20 +60,14 @@ def register():
 @cross_origin()
 def login_route():
     if request.method == 'POST':
-        print('first part')
         username = request.json['username']
         password = request.json['password']
         data = jsonify(request.json)
         data.headers.add('Access-Control-Allow-Origin', '*')
-        print('second part')
         currentUser = _localuser.query.filter_by(username=username).first()
-        print(currentUser.verify_password(password))
-        print('third')
         if currentUser and currentUser.verify_password(password):
-            print('first if')
             currentUser.is_active = True
             login_user(currentUser)
-            print('last')
             access_token = create_access_token(identity=username)
             return jsonify({"access_token":access_token})
         else:
@@ -79,10 +75,10 @@ def login_route():
     if request.method == "GET":
         return "You didnt post"
 
-@login_required
-@auth.route('/login_test')
-def index():
-    return f"{current_user.id}{current_user.email}{current_user.username}{current_user.password}{current_user.firstname}{current_user.lastname}"
+@auth.route('/user')
+def user():
+
+    return current_user.username
 
 @auth.route('/logout')
 def logout():

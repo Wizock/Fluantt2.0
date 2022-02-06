@@ -9,14 +9,17 @@ from flask import Flask
 import flask_praetorian
 from datetime import timedelta
 from flask_jwt_extended import JWTManager
-
+from secrets import token_urlsafe
+from random import randint
 def create_app():
+    secret_len = randint(50, 100)
     appvar = Flask(__name__)
-    appvar.secret_key = '331BCA339F53BE8D1D2394DCD472C'
+    appvar.secret_key = str(token_urlsafe(secret_len))
     appvar.register_blueprint(auth)
-    appvar.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/fluantt.sqlite3'
+    appvar.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/todobutbetter.sqlite3'
     appvar.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-    appvar.config["JWT_SECRET_KEY"] = "19E9E56E635D766891236F35DC227"
+    secret_len = randint(50, 100)
+    appvar.config["JWT_SECRET_KEY"] = str(token_urlsafe(secret_len))
     CORS(appvar, resources={
         r'/*': {
             'origins': '*',
@@ -40,5 +43,6 @@ with app.app_context():
     jwt = JWTManager(app)
     from backend.models import _localuser
     guard = flask_praetorian.Praetorian(app, _localuser)
+    db.create_all()
     
 

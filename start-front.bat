@@ -1,1 +1,1 @@
-cd frontend && npm start
+cd frontend && npm run start
